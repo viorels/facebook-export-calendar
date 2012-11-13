@@ -7,5 +7,5 @@ EVENT_STATUS_CHOICES = (('accepted', 'Accepted'),
                       ('needs-action', 'Needs Action'))
 
 class CalendarForm(forms.Form):
-    url = forms.URLField()
-    status = forms.MultipleChoiceField(choices=EVENT_STATUS_CHOICES)
+    url = forms.CharField()
+    status = forms.MultipleChoiceField(choices=EVENT_STATUS_CHOICES, required=True)

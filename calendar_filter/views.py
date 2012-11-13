@@ -1,6 +1,11 @@
 from django.views.generic.base import TemplateView, View
+from django.views.generic.edit import FormView
+from django.core.urlresolvers import reverse, reverse_lazy
+from django.contrib import messages
 from django.http import HttpResponse
 from django.conf import settings
+from urlparse import urlparse, urlunparse, parse_qsl
+from urllib import urlencode
 
 import requests
 import vobject
@@ -8,9 +13,30 @@ import vobject
 from forms import CalendarForm
 
 
-class HomeView(TemplateView):
+class HomeView(FormView):
     template_name = 'home.html'
+    form_class = CalendarForm
+    success_url = reverse_lazy('home')
 
+    def form_valid(self, form):
+        original_url = form.cleaned_data['url']
+        status_list = form.cleaned_data['status']
+        new_url = self.get_filtered_url(original_url, status_list)
+        messages.add_message(self.request, messages.INFO, new_url)
+        return super(HomeView, self).form_valid(form)
+
+    def get_filtered_url(self, original_url, status_list):
+        http_url = original_url.replace('webcal://', 'http://')
+        parsed_url = urlparse(http_url)
+        args = parse_qsl(parsed_url.query)
+        args.extend([('status', status) for status in status_list])
+        filtered_url = urlunparse((parsed_url.scheme,
+                                   self.request.get_host(),
+                                   reverse('filter'),
+                                   None,
+                                   urlencode(args),
+                                   None))
+        return filtered_url
 
 class CalendarResponseMixin(object):
     """

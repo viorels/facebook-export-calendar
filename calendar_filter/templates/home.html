@@ -1,1 +1,28 @@
-Export and filter Facebook calendar events in webcal format
+<html>
+<head>
+<title>Facebook Calendar export and filter</title>
+</head>
+<body>
+
+<h1>Facebook Calendar export and filter</h1>
+
+Export and filter Facebook calendar events in webcal format.<br>
+
+<form method="post">
+{% csrf_token %}
+<table>
+{{ form.as_table }}
+</table>
+<input type="submit">
+</form>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+</body>
+</html>
