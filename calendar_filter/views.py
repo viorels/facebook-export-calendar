@@ -20,14 +20,14 @@ class CalendarResponseMixin(object):
 
     def render_to_response(self, context, **response_kwargs):
         charset = 'utf-8'
-        response = self.convert_context_to_vobject(context)
+        response_vobject = self.convert_context_to_vobject(context)
         response_kwargs['content_type'] = 'text/calendar;charset=%s' % charset
-        # TODO: Content-Length
-        # response_kwargs['content_length'] = len(response)
-        return self.response_class(
-            response,
+        response = self.response_class(
+            response_vobject,
             **response_kwargs
         )
+        response['Content-Length'] = len(response_vobject)
+        return response
 
     def convert_context_to_vobject(self, context):
         return context['calendar'].serialize()
