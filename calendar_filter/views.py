@@ -30,7 +30,7 @@ class HomeView(FormView):
         parsed_url = urlparse(http_url)
         args = parse_qsl(parsed_url.query)
         args.extend([('status', status) for status in status_list])
-        filtered_url = urlunparse((parsed_url.scheme,
+        filtered_url = urlunparse(('webcal',
                                    self.request.get_host(),
                                    reverse('filter'),
                                    None,
