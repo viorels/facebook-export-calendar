@@ -26,8 +26,10 @@ This tool allows you to export and filter Facebook calendar events by RSVP keepi
     <p>Then you will see a pop-up window.</p>
     <img src="{{ STATIC_PREFIX }}screenshots/4UpcomingEvents.jpg">
   </li>
+
   <li>
     <strong>Convert the link to filter the results</strong>
+    {% if not messages %}
     <form method="post">
     {% csrf_token %}
     <table>
@@ -35,6 +37,7 @@ This tool allows you to export and filter Facebook calendar events by RSVP keepi
     </table>
     <input type="submit" value="Get filtered calendar link">
     </form>
+    {% endif %}
   </li>
 
   {% if messages %}
