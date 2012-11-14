@@ -1,28 +1,52 @@
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
 <html>
 <head>
 <title>Facebook Calendar export and filter</title>
 </head>
 <body>
 
-<h1>Facebook Calendar export and filter</h1>
+<h1>How to sync Facebook events to Google Calendar and filter by RSVP</h1>
 
-Export and filter Facebook calendar events in webcal format.<br>
+<p>
+Facebook allows you to export all your events in a format (Webcal) that allows them to be imported into other calendar tools such as Google calendar. The problem is that it does not allow you to select what kind of events you want to bring into your favorite calendar so you end up being flooded with all the spammy events that your friends invite you to, even if you do not want to go.
+</p>
 
-<form method="post">
-{% csrf_token %}
-<table>
-{{ form.as_table }}
-</table>
-<input type="submit">
-</form>
+<p>
+This tool allows you to export and filter Facebook calendar events by RSVP keeping the "Going" and/or "Maybe" ones and skipping the "Declined" events and the ones you have not responded yet to. Here are the steps you need to follow in order to setup your calendar:
+</p>
 
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+<ol>
+  <li>
+    <strong>Find the events export link</strong>
+    <p>On your Facebook homepage, click "Events" at the left</p>
+    <img src="{{ STATIC_PREFIX }}screenshots/2Events.jpg">
+    <p>Hit the drop-down menu at the right, and select "Export Events"</p>
+    <img src="{{ STATIC_PREFIX }}screenshots/3Export.jpg">
+    <p>Then you will see a pop-up window.</p>
+    <img src="{{ STATIC_PREFIX }}screenshots/4UpcomingEvents.jpg">
+  </li>
+  <li>
+    <strong>Convert the link to filter the results</strong>
+    <form method="post">
+    {% csrf_token %}
+    <table>
+    {{ form.as_table }}
+    </table>
+    <input type="submit" value="Get filtered calendar link">
+    </form>
+  </li>
+
+  {% if messages %}
+  <li>
+    <strong>Get this link and add it to Google calendar or your favorite calendar tool</strong>
+    <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  </li>
+  {% endif %}
 
 </body>
 </html>

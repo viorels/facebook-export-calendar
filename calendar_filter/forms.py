@@ -7,5 +7,8 @@ EVENT_STATUS_CHOICES = (('accepted', 'Accepted'),
                       ('needs-action', 'Needs Action'))
 
 class CalendarForm(forms.Form):
-    url = forms.CharField()
-    status = forms.MultipleChoiceField(choices=EVENT_STATUS_CHOICES, required=True)
+    url = forms.CharField(label="Facebook events link")
+    status = forms.MultipleChoiceField(
+        choices=EVENT_STATUS_CHOICES,
+        required=True,
+        label="Accepted statuses")
