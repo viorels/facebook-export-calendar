@@ -77,35 +77,37 @@ body {
     </div>
   </div>
 
-  <form method="post">
   <div class="row">
     <div class="span12">
-      <h3>2. Convert the link to filter the results</h3>
+      <h3>2. Convert the link to filter the events</h3>
       {% if not messages %}
-      {% csrf_token %}
 
-      {% for field in form %}
-      <div class="row">
-        <div class="span2">{{ field.label }}:</div>
-        <div class="span6">{{ field }}</div>
-        <div class="span4 text-error">{{ field.errors }}</div>
-      </div>
-      {% endfor %}
-
-      <div class="row">
-        <div class="offset2 span10">
-          <input type="submit" value="Get calendar link">
+      <form method="post" class="form-horizontal">
+        {% for field in form %}
+        <div class="control-group {% if field.errors %}error{% endif %}">
+          <div class="control-label">{{ field.label_tag }}</div>
+          <div class="controls">
+            {{ field }}
+            <span class="help-inline">{{ field.errors }}</span>
+          </div>
         </div>
-      </div>
+        {% endfor %}
+
+        <div class="control-group">
+          <div class="controls">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-primary" value="Get calendar link">
+          </div>
+        </div>
+      </form>
       {% endif %}
     </div>
   </div>
-  </form>
 
   {% if messages %}
   <div class="row">
     <div class="span12">
-      <h3>3. Get this link and add it to Google calendar</h3>
+      <h3>3. Copy this link and add it to Google calendar</h3>
       <div class="messages">
         {% for message in messages %}
         <blockquote{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</blockquote>

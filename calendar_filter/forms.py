@@ -10,7 +10,7 @@ class CalendarForm(forms.Form):
     url = forms.CharField(
         label="Facebook events link",
         widget=TextInput(attrs={
-            "size": "40",
+            "class": "input-xxlarge",
             "placeholder": "webcal://www.facebook.com/ical/u.php?uid=..."})
         )
     status = forms.MultipleChoiceField(
