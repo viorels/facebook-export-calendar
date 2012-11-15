@@ -1,6 +1,6 @@
 from django.views.generic.base import TemplateView, View
 from django.views.generic.edit import FormView
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.http import HttpResponse
 from django.conf import settings
@@ -16,7 +16,6 @@ from forms import CalendarForm
 class HomeView(FormView):
     template_name = 'home.html'
     form_class = CalendarForm
-    success_url = reverse_lazy('home')
 
     def form_valid(self, form):
         original_url = form.cleaned_data['url']
@@ -24,6 +23,9 @@ class HomeView(FormView):
         new_url = self.get_filtered_url(original_url, status_list)
         messages.add_message(self.request, messages.INFO, new_url)
         return super(HomeView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('home') + '#step2'
 
     def get_filtered_url(self, original_url, status_list):
         http_url = original_url.replace('webcal://', 'http://')

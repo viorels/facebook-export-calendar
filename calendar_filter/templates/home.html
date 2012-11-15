@@ -88,10 +88,10 @@ body {
     </div>
   </div>
 
+  <a name="step2"></a>
   <div class="row">
     <div class="span12">
-      <h3>2. Convert the link to filter the events</h3>
-      {% if not messages %}
+      <h3>2. Modify the link to filter the events</h3>
 
       <form method="post" class="form-horizontal">
         {% for field in form %}
@@ -111,24 +111,42 @@ body {
           </div>
         </div>
       </form>
-      {% endif %}
+
     </div>
   </div>
 
   {% if messages %}
   <div class="row">
     <div class="span12">
-      <h3>3. Copy this link and add it to Google calendar</h3>
+      <h3>3. Copy the modified link</h3>
       <div class="messages">
         {% for message in messages %}
-        <blockquote{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</blockquote>
+        <blockquote class="text-info">{{ message }}</blockquote>
         {% endfor %}
       </div>
     </div>
   </div>
+
+  <div class="row">
+    <div class="span4">
+      <h3>4. Add it to Google Calendar</h3>
+      <p>Log in your <a href="https://www.google.com/calendar" target="_blank">Google Calendar</a>, click the drop-down menu next to the "Other Calendars" option, and then select "Add by URL".</p>
+    </div>
+    <div class="span8">
+      <img src="{{ STATIC_PREFIX }}screenshots/google-calendar-add-url.png">
+    </div>
+  </div>
+  <div class="row">
+    <div class="span4">
+      <p>On the pop-up window, paste the modified link above, and click the "Add Calendar" button, then you are done.</p>
+    </div>
+    <div class="span8">
+      <img src="{{ STATIC_PREFIX }}screenshots/google-calendar-add-by-url.png">
+    </div>
+  </div>
   {% endif %}
 
-  {% if messages or form.errors %}
+  {% if form.errors %}
   <script type="text/javascript">
     window.onload=function () {
       window.scrollTo(0, document.body.scrollHeight);
