@@ -14,6 +14,15 @@ body {
   padding-top: 60px;
   padding-bottom: 40px;
 }
+.hero-unit {
+  position: relative;
+}
+.hero-unit .ribbon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+}
 </style>
 
 </head>
@@ -40,6 +49,8 @@ body {
 
 <div class="container">
   <div class="hero-unit">
+    <a href="https://github.com/viorels/facebook-export-calendar"><img class="ribbon" src="{{ STATIC_PREFIX }}images/github_forkme.png" alt="Fork me on GitHub"></a>
+
     <h2>Synchronize Facebook events to Google Calendar and filter by RSVP</h2>
 
     <p>Facebook allows you to export all your events in a format that you can import into other calendar tools such as Google calendar.</p>
