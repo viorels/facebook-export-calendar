@@ -1,9 +1,11 @@
+import time
 from django.views.generic.base import TemplateView, View
 from django.views.generic.edit import FormView
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.http import HttpResponse
 from django.conf import settings
+from django.utils.http import http_date
 from urlparse import urlparse, urlunparse, parse_qsl
 from urllib import urlencode
 
@@ -63,7 +65,9 @@ class CalendarResponseMixin(object):
 class FilterView(CalendarResponseMixin, View):
     def get(self, request, *args, **kwargs):
         context = {'calendar': self.filter_calendar()}
-        return self.render_to_response(context)
+        response = self.render_to_response(context)
+        response['Expires'] = http_date(time.time() + 60*15)
+        return response
 
     def get_calendar(self):
         uid = self.request.GET.get('uid')
