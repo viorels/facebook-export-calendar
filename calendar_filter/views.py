@@ -78,7 +78,7 @@ class FilterView(CalendarResponseMixin, View):
             response = requests.get(url, params={'uid': uid, 'key': key})
         else:
             raise ValueError("Required parameters uid and key")
-        return vobject.readOne(response.text)
+        return vobject.readOne(response.text, ignoreUnreadable=True)
 
     def filter_calendar(self):
         allowed_status = set(self.request.GET.getlist('status', []))
